@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<lang="utf=8"/>
+	<title>Sochastic Matrix</title>
+	<!-- Work of YEOH-CHI-EE -->
+	<style>
+	body {
+            min-width: 1200px;
+            background-color: aliceblue;
+    }
+        
+    div {
+        padding: 2px;
+    }
+        
+    #container {
+		margin-top: 200px;
+	    margin-left: auto;
+        margin-right: auto;
+        display: block;
+		width: 1200px;
+		border: 2px dashed blue;
+		align-content: center;
+		-webkit-align-content: center;
+    }
+	table {
+		min-width: 1000px;
+	}
+	table{
+		margin-left: auto;
+		margin-right: auto;
+	}
+	table tr td, table tr th {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	td {
+		min-width: 125px;
+		text-align: center;
+	}
+	th {
+		text-align: center;
+	}
+	.col_1 {
+		width: 120px;
+		text-align: center;
+	}
+	
+	</style>
+<script>
+	const a = 0.95;
+	const b = 0.03;
+	const c = 0.05;
+	const d = 0.97;
+	
+	const x = 10; // * Math.pow( 10, 3)
+	const y = 2.5;// * Math.pow( 10, 3)
+
+	var matrix = new Array(0.95, 0.03, 0.05, 0.97 );
+	var clicked = false;
+	
+	function matrixPower(old){
+		newMatrix = new Array(4);
+		newMatrix[0] = old[0] * a + old[1] * c;
+		newMatrix[1] = old[0] * b + old[1] * d;
+		newMatrix[2] = old[2] * a + old[3] * c;
+		newMatrix[3] = old[2] * b + old[3] * d;
+		return newMatrix;
+	}
+	function call(){
+		if ( !clicked ){
+			let i;
+			document.getElementById("x0").innerHTML = (x*10000) + " ( " + (x/12.5).toFixed(2) + "% ) ";
+			document.getElementById("y0").innerHTML = (y*10000) + " ( " + (y/12.5).toFixed(2) + "% ) ";
+			for ( i = 1; i < 21; i++ ){
+				matrix = matrixPower(matrix);
+				console.log("P to the power of " + (i+1));
+				console.table(matrix);
+				town = matrix[0] * x + matrix[1] * y;
+				rural = matrix[2] * x + matrix[3] * y;
+				// console.log((i+1) + " year later: " + town + " at the town and " + rural + " at the rural area");
+				if ( i <= 5 || i == 10 || i == 20){
+					document.getElementById("x"+i).innerHTML = Math.round(town*10000) + " ( " + (town/12.5).toFixed(2) +"% ) ";
+					document.getElementById("y"+i).innerHTML = Math.round(rural*10000) + " ( " + (rural/12.5).toFixed(2) +"% ) ";
+				}
+			}
+			clicked = true;
+		}
+		else
+			alert("You have clicked more than once.按一次就好噢~");
+	}
+</script>
+</head>
+<body>
+	<div id="container">
+		<h3>第15題：</h3>
+		<p>假設10萬人住在某城市，2.5萬人住郊區。區域規劃委原會決定，每年5%的城市人口流向教區，3%的郊區人口遷向城市。</p>
+		<ol>
+			<li>假設總人保持不變，製作一個表格，顯示在五年時間内城市及郊區的人口（四捨五入到最接近的整數）。
+		<table>
+			<tr>
+				<th class="col_1">
+					x<sup>-th</sup> year
+				</th>
+				<th>
+					0
+				</th>
+				<th>
+					1
+				</th>
+				<th>
+					2
+				</th>
+				<th>
+					3
+				</th>
+				<th>
+					4
+				</th>
+				<th>
+					5
+				</th>
+				<th>
+					10
+				</th>
+				<th>
+					20
+				</th>
+			</tr>
+			<tr>
+				<th class="col_1">
+					Town ( * 10<sup>4</sup> )
+				</th>
+				<td id="x0">
+				
+				</td>
+				<td id="x1">
+				
+				</td>
+				<td id="x2">
+				
+				</td>
+				<td id="x3">
+				
+				</td>
+				<td id="x4">
+				
+				</td>
+				<td id="x5">
+				
+				</td>
+				<td id="x10">
+				
+				</td>
+				<td id="x20">
+				
+				</td>
+			</tr>
+			<tr>
+				<th class="col_1">
+					Rural( * 10<sup>4</sup> )
+				</th>
+				<td id="y0">
+				
+				</td>
+				<td id="y1">
+				
+				</td>
+				<td id="y2">
+				
+				</td>
+				<td id="y3">
+				
+				</td>
+				<td id="y4">
+				
+				</td>
+				<td id="y5">
+				
+				</td>
+				<td id="y10">
+				
+				</td>
+				<td id="y20">
+				
+				</td>
+			</tr>
+			<tr>
+				<td colspan="9" align="center">
+					<input type="button" onclick="call();" value="Click" />
+				</td>
+			</tr>
+		</table>
+		</li>
+		</ol>
+		
+	</div>
+</body>
+</html>
